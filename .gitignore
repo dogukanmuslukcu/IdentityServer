@@ -1,0 +1,35 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.pdb
+*.db
+*.log
+*.vs/
+.vscode/
+*.DS_Store
+
+# Rider / JetBrains
+.idea/
+
+# User-specific files
+*.swp
+*.userosscache
+*.sln.docstates
+
+# Build Results
+[Dd]ebug/
+[Rr]elease/
+
+# Logs
+logs/
+*.log
+
+# EF Core Migrations
+Migrations/
+
+# Sensitive files
+secrets.json
+.env
