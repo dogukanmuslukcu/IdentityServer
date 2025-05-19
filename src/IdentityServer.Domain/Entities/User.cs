@@ -13,5 +13,6 @@ public class User : IEntity<Guid>
     public bool IsActive { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    // Navigation
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }

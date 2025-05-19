@@ -1,4 +1,5 @@
 ﻿using IdentityServer.Domain.Entities;
+using IdentityServer.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Persistence.Contexts;
@@ -13,21 +14,8 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
         base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.HasKey(u => u.Id);
-            entity.HasIndex(u => u.Email).IsUnique();
-            entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
-        });
-
-        modelBuilder.Entity<RefreshToken>(entity =>
-        {
-            entity.HasKey(r => r.Id);
-            entity.HasOne(r => r.User)
-                  .WithMany(u => u.RefreshTokens)
-                  .HasForeignKey(r => r.UserId);
-        });
     }
 }

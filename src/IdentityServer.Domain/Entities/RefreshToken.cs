@@ -11,6 +11,8 @@ public class RefreshToken : IEntity<Guid>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public bool IsRevoked { get; set; } = false;
 
+    // Foreign Key
     public Guid UserId { get; set; }
+    // Navigation Property
     public User User { get; set; }
 }
