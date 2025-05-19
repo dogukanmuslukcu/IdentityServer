@@ -14,4 +14,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityServer.Application\IdentityServer.Application.csproj" />
+    <ProjectReference Include="..\IdentityServer.Domain\IdentityServer.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
