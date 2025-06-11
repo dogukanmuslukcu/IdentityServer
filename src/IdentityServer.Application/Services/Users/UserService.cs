@@ -1,16 +1,17 @@
-﻿using IdentityServer.Application.Interfaces;
-using IdentityServer.Application.Repositories.Users;
+﻿using IdentityServer.Application.Abstractions;
+using IdentityServer.Application.Interfaces;
 using IdentityServer.Application.Services.Users;
 using IdentityServer.Domain.Entities;
+using Microsoft.AspNet.Identity;
 // ...
 
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
 
-    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ITokenService tokenService)
+    public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
@@ -30,12 +31,12 @@ public class UserService : IUserService
             UserName = request.UserName,
             CreatedAt = DateTime.UtcNow
         };
-
-        user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
+        
+        user.PasswordHash = _passwordHasher.HashPassword(request.Password);
 
         await _userRepository.AddAsync(user, cancellationToken);
 
-        var (accessToken, refreshToken) = _tokenService.GenerateTokens(user);
+        var (accessToken, refreshToken) = _tokenService.GenerateTokensAsync(user);
 
         return new RegisterUserResponse
         {
